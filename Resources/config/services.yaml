@@ -1,0 +1,18 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Zikula\Bundle\HookBundle\:
+        resource: '../../*'
+        exclude: '../../{bootstrap.php,Tests,vendor}'
+
+    Zikula\Bundle\HookBundle\Collector\HookCollector:
+        arguments:
+          $providers: !tagged_iterator zikula.hook_provider
+          $subscribers: !tagged_iterator zikula.hook_subscriber
+
+    Zikula\Bundle\HookBundle\Listener\HookListenerBuilderListener:
+        arguments:
+          $installed: '%installed%'
